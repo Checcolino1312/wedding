@@ -2,11 +2,8 @@
 <html lang="it">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="format-detection" content="telephone=no">
-    <title>💖 ZIP Cuore</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Auguri Pierpaolo & Letizia! 💕</title>
     <style>
         * {
             margin: 0;
@@ -15,528 +12,379 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: linear-gradient(135deg, #fce7f3, #fef2f2, #f3e8ff);
+            font-family: 'Georgia', serif;
+            background: linear-gradient(135deg, #ffeef8 0%, #fff0f5 50%, #f0e6ff 100%);
             min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-            user-select: none;
+            overflow-x: hidden;
         }
 
         .container {
-            text-align: center;
-            max-width: 600px;
-        }
-
-        h1 {
-            font-size: 3rem;
-            font-weight: bold;
-            background: linear-gradient(45deg, #dc2626, #ec4899);
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 10px;
-        }
-
-        .subtitle {
-            color: #6b7280;
-            margin-bottom: 20px;
-            font-size: 1.1rem;
-        }
-
-        .game-status {
-            background: white;
-            border-radius: 12px;
+            max-width: 800px;
+            margin: 0 auto;
             padding: 20px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            margin-bottom: 20px;
         }
 
-        .status-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 10px;
-        }
-
-        .next-number {
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: #dc2626;
-        }
-
-        .progress-bar {
-            width: 100%;
-            height: 12px;
-            background: #e5e7eb;
-            border-radius: 6px;
-            overflow: hidden;
-        }
-
-        .progress-fill {
-            height: 100%;
-            background: linear-gradient(45deg, #ef4444, #ec4899);
-            transition: width 0.3s ease;
-        }
-
-        .progress-text {
-            font-size: 0.8rem;
-            color: #6b7280;
-            margin-top: 5px;
-        }
-
-        .game-grid {
+        .card {
             background: white;
             border-radius: 20px;
-            padding: 30px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-            border: 2px solid #fecaca;
-            margin-bottom: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
             position: relative;
         }
 
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(7, 1fr);
-            gap: 8px;
+        .header {
+            background: linear-gradient(135deg, #ff6b9d, #c44569);
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+            position: relative;
         }
 
-        .cell {
-            width: 56px;
-            height: 56px;
-            border: 2px solid #d1d5db;
-            border-radius: 12px;
+        .hearts {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .heart {
+            position: absolute;
+            color: rgba(255,255,255,0.3);
+            font-size: 20px;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(5deg); }
+        }
+
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .subtitle {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .game-section {
+            background: #f8f9ff;
+            border-radius: 15px;
+            padding: 30px;
+            margin: 30px 0;
+            border: 2px solid #e1e5ff;
+        }
+
+        .memory-game {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            max-width: 400px;
+            margin: 20px auto;
+        }
+
+        .memory-card {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.1rem;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            background: linear-gradient(135deg, #f9fafb, #f3f4f6);
-            color: #374151;
-            touch-action: none;
-        }
-
-        .cell.revealed {
-            background: linear-gradient(135deg, #f87171, #ec4899);
+            font-size: 2em;
             color: white;
-            border-color: #ef4444;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            user-select: none;
+        }
+
+        .memory-card:hover {
             transform: scale(1.05);
-            box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
         }
 
-        .cell.next-target {
-            animation: pulse 2s infinite;
-            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.4);
+        .memory-card.flipped {
+            background: white;
+            border: 2px solid #667eea;
+            color: #667eea;
         }
 
-        .cell.dragging-over {
-            background: #dbeafe;
-            transform: scale(1.1);
+        .memory-card.matched {
+            background: linear-gradient(135deg, #11998e, #38ef7d);
+            transform: scale(0.95);
         }
 
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
+        .wish-generator {
+            text-align: center;
+            margin: 30px 0;
         }
 
-        .message {
-            padding: 15px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            font-weight: 500;
-        }
-
-        .message.success {
-            background: #fef2f2;
-            border: 1px solid #fca5a5;
-            color: #dc2626;
-            animation: bounce 1s infinite;
-        }
-
-        .message.dragging {
-            background: #eff6ff;
-            border: 1px solid #93c5fd;
-            color: #2563eb;
-        }
-
-        @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
-            40% { transform: translateY(-10px); }
-            60% { transform: translateY(-5px); }
-        }
-
-        .controls {
-            margin-bottom: 20px;
-        }
-
-        .btn {
-            background: #dc2626;
+        .wish-btn {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
             color: white;
             border: none;
-            padding: 12px 24px;
-            border-radius: 8px;
-            font-size: 1rem;
-            font-weight: 500;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-size: 1.1em;
             cursor: pointer;
-            transition: background 0.2s ease;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            margin: 10px;
         }
 
-        .btn:hover {
-            background: #b91c1c;
+        .wish-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
         }
 
-        .btn:disabled {
-            background: #9ca3af;
-            cursor: not-allowed;
-        }
-
-        .instructions {
-            background: white;
-            border-radius: 12px;
+        .wish-display {
+            background: linear-gradient(135deg, #ffeaa7, #fdcb6e);
             padding: 20px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            text-align: left;
-            font-size: 0.9rem;
-            color: #374151;
-            line-height: 1.5;
+            border-radius: 15px;
+            margin: 20px 0;
+            font-style: italic;
+            font-size: 1.1em;
+            min-height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
         }
 
-        .instructions h3 {
-            color: #dc2626;
-            font-weight: bold;
-            margin-bottom: 10px;
+        .confetti {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1000;
         }
 
-        .instructions ul {
-            margin-left: 20px;
-            margin-top: 10px;
+        .confetti-piece {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: #ff6b9d;
+            animation: confetti-fall 3s ease-out forwards;
         }
 
-        .instructions li {
-            margin-bottom: 5px;
-            font-size: 0.8rem;
+        @keyframes confetti-fall {
+            0% {
+                transform: translateY(-100vh) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
         }
 
-        @media (max-width: 768px) {
-            h1 { font-size: 2rem; }
-            .cell { width: 48px; height: 48px; font-size: 1rem; }
-            .game-grid { padding: 20px; }
-            .subtitle { font-size: 1rem; }
+        .message-section {
+            background: linear-gradient(135deg, #e8f5e8, #f0fff0);
+            padding: 30px;
+            border-radius: 15px;
+            margin: 30px 0;
+            text-align: center;
+        }
+
+        @media (max-width: 600px) {
+            .memory-game {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            
+            .memory-card {
+                width: 70px;
+                height: 70px;
+                font-size: 1.5em;
+            }
+
+            h1 {
+                font-size: 2em;
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>💖 ZIP Cuore</h1>
-        <p class="subtitle">Trascina senza alzare il dito attraverso i numeri in ordine (1→2→3...) per rivelare il cuore!</p>
-        
-        <div class="game-status">
-            <div class="status-row">
-                <span id="status-text">Prossimo numero:</span>
-                <span class="next-number" id="next-number">1</span>
+        <div class="card">
+            <div class="header">
+                <div class="hearts" id="hearts"></div>
+                <h1>💕 Pierpaolo & Letizia 💕</h1>
+                <p class="subtitle">Auguri per il vostro matrimonio!</p>
             </div>
-            <div class="progress-bar">
-                <div class="progress-fill" id="progress-fill" style="width: 0%"></div>
+
+            <div class="content">
+                <div class="message-section">
+                    <h2>🎉 Benvenuti nel vostro biglietto speciale! 🎉</h2>
+                    <p>Mi andava di fare qualcosa di goliardico e dunque...</p>
+                </div>
+
+                <div class="game-section">
+                    <h3>🎮 Memory dell'Amore</h3>
+                    <p>Trovate le coppie per scoprire i simboli del vostro matrimonio perfetto!</p>
+                    <div class="memory-game" id="memoryGame"></div>
+                    <p id="gameStatus">Clicca sulle carte per iniziare!</p>
+                </div>
+
+                <div class="wish-generator">
+                    <h3>✨ Generatore di Auguri </h3>
+                    <p>Clicca per ricevere un augurio (da riutilizzare in altre occasioni)</p>
+                    <button class="wish-btn" onclick="generateWish()">Clicca qui! ✨</button>
+
+                </div>
+
+
             </div>
-            <div class="progress-text" id="progress-text">0/20 caselle del cuore</div>
-        </div>
-
-        <div id="success-message" class="message success" style="display: none;">
-            🎉 Fantastico! Hai rivelato tutto il cuore trascinando! 💖
-        </div>
-
-        <div id="dragging-message" class="message dragging" style="display: none;">
-            🔵 Continua a trascinare... Cerca il numero <span id="drag-next">1</span>
-        </div>
-
-        <div class="game-grid">
-            <div class="grid" id="game-grid"></div>
-        </div>
-
-        <div class="controls">
-            <button class="btn" onclick="resetGame()" id="reset-btn">🔄 Nuova Partita</button>
-        </div>
-
-        <div class="instructions">
-            <h3>📋 Come giocare (stile ZIP):</h3>
-            <p><strong>Obiettivo:</strong> Trascina il dito/mouse attraverso i numeri in ordine crescente SENZA MAI ALZARLO!</p>
-            <p><strong>Regole:</strong></p>
-            <ul>
-                <li>Inizia dal numero 1 e trascina verso 2, poi 3, 4, 5...</li>
-                <li><strong>NON alzare mai il dito/mouse</strong> durante il trascinamento</li>
-                <li>I numeri giusti formano un cuore nascosto</li>
-                <li>Se alzi il dito prima di finire, devi ricominciare</li>
-                <li>Le caselle corrette si trasformano in cuoricini 💖</li>
-                <li>Vinci quando completi l'intera sequenza da 1 a 20!</li>
-            </ul>
         </div>
     </div>
 
+    <div class="confetti" id="confetti"></div>
+
     <script>
-        const gridSize = 7;
-        
-        // Forma del cuore e sequenza corretta
-        const heartSequence = [
-            { r: 1, c: 1, num: 1 }, { r: 1, c: 2, num: 2 }, { r: 1, c: 4, num: 3 }, { r: 1, c: 5, num: 4 },
-            { r: 2, c: 0, num: 5 }, { r: 2, c: 1, num: 6 }, { r: 2, c: 2, num: 7 }, { r: 2, c: 3, num: 8 }, 
-            { r: 2, c: 4, num: 9 }, { r: 2, c: 5, num: 10 }, { r: 2, c: 6, num: 11 },
-            { r: 3, c: 1, num: 12 }, { r: 3, c: 2, num: 13 }, { r: 3, c: 3, num: 14 }, { r: 3, c: 4, num: 15 }, { r: 3, c: 5, num: 16 },
-            { r: 4, c: 2, num: 17 }, { r: 4, c: 3, num: 18 }, { r: 4, c: 4, num: 19 },
-            { r: 5, c: 3, num: 20 }
+        // Animazione cuori nell'header
+        function createHearts() {
+            const heartsContainer = document.getElementById('hearts');
+            const heartSymbols = ['💕', '💖', '💗', '💘', '💝'];
+            
+            for (let i = 0; i < 15; i++) {
+                const heart = document.createElement('div');
+                heart.className = 'heart';
+                heart.textContent = heartSymbols[Math.floor(Math.random() * heartSymbols.length)];
+                heart.style.left = Math.random() * 100 + '%';
+                heart.style.top = Math.random() * 100 + '%';
+                heart.style.animationDelay = Math.random() * 3 + 's';
+                heartsContainer.appendChild(heart);
+            }
+        }
+
+        // Memory Game
+        const gameSymbols = ['💕', '💍', '🌹', '🥂', '💒', '👰', '🤵', '💐'];
+        let gameCards = [...gameSymbols, ...gameSymbols];
+        let flippedCards = [];
+        let matchedPairs = 0;
+
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+
+        function createMemoryGame() {
+            shuffleArray(gameCards);
+            const gameContainer = document.getElementById('memoryGame');
+            gameContainer.innerHTML = '';
+            
+            gameCards.forEach((symbol, index) => {
+                const card = document.createElement('div');
+                card.className = 'memory-card';
+                card.dataset.symbol = symbol;
+                card.dataset.index = index;
+                card.textContent = '❓';
+                card.addEventListener('click', flipCard);
+                gameContainer.appendChild(card);
+            });
+        }
+
+        function flipCard(e) {
+            const card = e.target;
+            if (card.classList.contains('flipped') || card.classList.contains('matched') || flippedCards.length === 2) {
+                return;
+            }
+
+            card.classList.add('flipped');
+            card.textContent = card.dataset.symbol;
+            flippedCards.push(card);
+
+            if (flippedCards.length === 2) {
+                setTimeout(checkMatch, 1000);
+            }
+        }
+
+        function checkMatch() {
+            const [card1, card2] = flippedCards;
+            const status = document.getElementById('gameStatus');
+
+            if (card1.dataset.symbol === card2.dataset.symbol) {
+                card1.classList.add('matched');
+                card2.classList.add('matched');
+                matchedPairs++;
+                
+                if (matchedPairs === 8) {
+                    status.textContent = '🎉 Fantastico! Avete trovato tutti i simboli dell\'amore! 🎉';
+                    createConfetti();
+                } else {
+                    status.textContent = `Ottimo! ${matchedPairs}/8 coppie trovate! 💕`;
+                }
+            } else {
+                card1.classList.remove('flipped');
+                card2.classList.remove('flipped');
+                card1.textContent = '❓';
+                card2.textContent = '❓';
+                status.textContent = 'Riprova! L\'amore vince sempre! 💪';
+            }
+            
+            flippedCards = [];
+        }
+
+        // Generatore di auguri
+        const wishes = [
+            "Che il vostro amore sia eterno come le stelle nel cielo! ⭐",
+            "Possiate essere sempre l'uno il porto sicuro dell'altra! ⚓",
+            "Che ogni giorno insieme sia una nuova avventura! 🌄",
+            "Il vostro amore è la prova che i sogni diventano realtà! 🌈",
+            "Che possiate invecchiare insieme ridendo come oggi! 😄",
+            "Il vostro matrimonio è l'inizio della più bella storia d'amore! 📖",
+            "Che la vostra casa sia sempre piena di amore e risate! 🏠",
+            "Possiate superare insieme ogni tempesta e godere ogni arcobaleno! 🌩️🌈",
+            "Che il vostro amore cresca come un giardino in primavera! 🌸",
+            "Siate sempre l'uno la migliore avventura dell'altra! 🚀"
         ];
 
-        let gridNumbers = [];
-        let draggedSequence = [];
-        let isDragging = false;
-        let gameWon = false;
-
-        function initializeGrid() {
-            const usedNumbers = new Set();
-            const correctNumbers = new Array(gridSize * gridSize).fill(0);
+        function generateWish() {
+            const wishDisplay = document.getElementById('wishDisplay');
+            const randomWish = wishes[Math.floor(Math.random() * wishes.length)];
             
-            // Assegna i numeri corretti alle posizioni del cuore
-            heartSequence.forEach(({ r, c, num }) => {
-                const index = r * gridSize + c;
-                correctNumbers[index] = num;
-                usedNumbers.add(num);
-            });
-            
-            // Riempi le altre caselle con numeri casuali
-            for (let i = 0; i < gridSize * gridSize; i++) {
-                if (correctNumbers[i] === 0) {
-                    let randomNum;
-                    do {
-                        randomNum = Math.floor(Math.random() * 99) + 1;
-                    } while (usedNumbers.has(randomNum));
-                    
-                    correctNumbers[i] = randomNum;
-                    usedNumbers.add(randomNum);
-                }
-            }
-            
-            gridNumbers = correctNumbers;
-            renderGrid();
+            wishDisplay.style.opacity = '0';
+            setTimeout(() => {
+                wishDisplay.textContent = randomWish;
+                wishDisplay.style.opacity = '1';
+            }, 300);
         }
 
-        function renderGrid() {
-            const grid = document.getElementById('game-grid');
-            grid.innerHTML = '';
+        // Effetto confetti
+        function createConfetti() {
+            const confettiContainer = document.getElementById('confetti');
+            const colors = ['#ff6b9d', '#4ecdc4', '#45b7d1', '#f9ca24', '#eb4d4b', '#6c5ce7'];
             
-            for (let i = 0; i < gridSize * gridSize; i++) {
-                const r = Math.floor(i / gridSize);
-                const c = i % gridSize;
-                const number = gridNumbers[i];
+            for (let i = 0; i < 50; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti-piece';
+                confetti.style.left = Math.random() * 100 + '%';
+                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.animationDelay = Math.random() * 2 + 's';
+                confettiContainer.appendChild(confetti);
                 
-                const cell = document.createElement('div');
-                cell.className = 'cell';
-                cell.dataset.row = r;
-                cell.dataset.col = c;
-                cell.dataset.number = number;
-                
-                const isRevealed = draggedSequence.some(cell => cell.r === r && cell.c === c);
-                const isHeartCell = heartSequence.some(cell => cell.r === r && cell.c === c);
-                const isNextTarget = !gameWon && isHeartCell && number === draggedSequence.length + 1;
-                
-                if (isRevealed) {
-                    cell.classList.add('revealed');
-                    cell.textContent = '💖';
-                } else {
-                    cell.textContent = number;
-                    if (isNextTarget) {
-                        cell.classList.add('next-target');
-                    }
-                }
-                
-                // Event listeners
-                cell.addEventListener('mousedown', handleMouseDown);
-                cell.addEventListener('touchstart', handleTouchStart, { passive: false });
-                
-                grid.appendChild(cell);
-            }
-        }
-
-        function getCellFromElement(element) {
-            if (!element.classList.contains('cell')) return null;
-            return {
-                r: parseInt(element.dataset.row),
-                c: parseInt(element.dataset.col),
-                number: parseInt(element.dataset.number)
-            };
-        }
-
-        function getCellFromPoint(x, y) {
-            const element = document.elementFromPoint(x, y);
-            return getCellFromElement(element);
-        }
-
-        function handleCellDrag(r, c, number) {
-            if (gameWon) return;
-            
-            const expectedNumber = draggedSequence.length + 1;
-            
-            // Controlla se è già nella sequenza
-            if (draggedSequence.some(cell => cell.r === r && cell.c === c)) return;
-            
-            // Trova se questa casella fa parte del cuore
-            const heartCell = heartSequence.find(cell => cell.r === r && cell.c === c);
-            
-            if (heartCell && number === expectedNumber) {
-                // Aggiunge alla sequenza trascinata
-                draggedSequence.push({ r, c, num: number });
-                updateUI();
-                
-                // Controlla se ha vinto
-                if (draggedSequence.length === heartSequence.length) {
-                    gameWon = true;
-                    isDragging = false;
-                    showSuccess();
-                }
-                
-                renderGrid();
-            }
-        }
-
-        function handleMouseDown(e) {
-            e.preventDefault();
-            const cell = getCellFromElement(e.target);
-            if (!cell) return;
-            
-            startDragging();
-            handleCellDrag(cell.r, cell.c, cell.number);
-        }
-
-        function handleMouseMove(e) {
-            if (!isDragging) return;
-            
-            const cell = getCellFromPoint(e.clientX, e.clientY);
-            if (cell) {
-                handleCellDrag(cell.r, cell.c, cell.number);
-            }
-        }
-
-        function handleMouseUp() {
-            if (!isDragging) return;
-            stopDragging();
-        }
-
-        function handleTouchStart(e) {
-            e.preventDefault();
-            const cell = getCellFromElement(e.target);
-            if (!cell) return;
-            
-            startDragging();
-            handleCellDrag(cell.r, cell.c, cell.number);
-        }
-
-        function handleTouchMove(e) {
-            if (!isDragging) return;
-            e.preventDefault();
-            
-            const touch = e.touches[0];
-            const cell = getCellFromPoint(touch.clientX, touch.clientY);
-            if (cell) {
-                handleCellDrag(cell.r, cell.c, cell.number);
-            }
-        }
-
-        function handleTouchEnd(e) {
-            e.preventDefault();
-            stopDragging();
-        }
-
-        function startDragging() {
-            isDragging = true;
-            draggedSequence = [];
-            
-            document.addEventListener('mousemove', handleMouseMove);
-            document.addEventListener('mouseup', handleMouseUp);
-            document.addEventListener('touchmove', handleTouchMove, { passive: false });
-            document.addEventListener('touchend', handleTouchEnd, { passive: false });
-            
-            showDraggingMessage();
-        }
-
-        function stopDragging() {
-            isDragging = false;
-            
-            document.removeEventListener('mousemove', handleMouseMove);
-            document.removeEventListener('mouseup', handleMouseUp);
-            document.removeEventListener('touchmove', handleTouchMove);
-            document.removeEventListener('touchend', handleTouchEnd);
-            
-            hideDraggingMessage();
-            
-            // Se non ha completato la sequenza, reset dopo un secondo
-            if (draggedSequence.length !== heartSequence.length && !gameWon) {
                 setTimeout(() => {
-                    if (!gameWon) {
-                        draggedSequence = [];
-                        updateUI();
-                        renderGrid();
-                    }
-                }, 1000);
+                    confetti.remove();
+                }, 3000);
             }
         }
 
-        function updateUI() {
-            const progress = (draggedSequence.length / heartSequence.length) * 100;
-            
-            document.getElementById('progress-fill').style.width = progress + '%';
-            document.getElementById('progress-text').textContent = 
-                `${draggedSequence.length}/${heartSequence.length} caselle del cuore`;
-            
-            if (gameWon) {
-                document.getElementById('status-text').textContent = 'Completato!';
-                document.getElementById('next-number').textContent = '✅';
-            } else if (isDragging) {
-                document.getElementById('status-text').textContent = 'Trascinando...';
-                document.getElementById('next-number').textContent = draggedSequence.length + 1;
-                document.getElementById('drag-next').textContent = draggedSequence.length + 1;
-            } else {
-                document.getElementById('status-text').textContent = 'Prossimo numero:';
-                document.getElementById('next-number').textContent = draggedSequence.length + 1;
-            }
-        }
-
-        function showSuccess() {
-            document.getElementById('success-message').style.display = 'block';
-        }
-
-        function showDraggingMessage() {
-            document.getElementById('dragging-message').style.display = 'block';
-        }
-
-        function hideDraggingMessage() {
-            document.getElementById('dragging-message').style.display = 'none';
-        }
-
-        function resetGame() {
-            draggedSequence = [];
-            gameWon = false;
-            isDragging = false;
-            
-            document.getElementById('success-message').style.display = 'none';
-            document.getElementById('dragging-message').style.display = 'none';
-            
-            initializeGrid();
-            updateUI();
-        }
-
-        // Inizializza il gioco al caricamento della pagina
-        window.addEventListener('load', () => {
-            initializeGrid();
-            updateUI();
+        // Inizializzazione
+        document.addEventListener('DOMContentLoaded', function() {
+            createHearts();
+            createMemoryGame();
         });
-
-        // Previene il comportamento di default del browser per il drag
-        document.addEventListener('dragstart', (e) => e.preventDefault());
-        document.addEventListener('selectstart', (e) => e.preventDefault());
     </script>
 </body>
 </html>
