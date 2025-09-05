@@ -37,7 +37,7 @@
         .header {
             background: linear-gradient(135deg, #ff6b9d, #c44569);
             color: white;
-            padding: 30px 15px;
+            padding: 40px 20px;
             text-align: center;
             position: relative;
         }
@@ -54,195 +54,255 @@
         .heart {
             position: absolute;
             color: rgba(255,255,255,0.3);
-            font-size: 16px;
+            font-size: 20px;
             animation: float 3s ease-in-out infinite;
         }
 
         @keyframes float {
             0%, 100% { transform: translateY(0px) rotate(0deg); }
-            50% { transform: translateY(-15px) rotate(5deg); }
+            50% { transform: translateY(-20px) rotate(5deg); }
         }
 
         h1 {
-            font-size: 1.8em;
+            font-size: 2.5em;
             margin-bottom: 10px;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-            line-height: 1.2;
         }
 
         .subtitle {
-            font-size: 1em;
+            font-size: 1.2em;
             opacity: 0.9;
         }
 
         .content {
-            padding: 20px 15px;
-        }
-
-        .game-section {
-            background: #f8f9ff;
-            border-radius: 15px;
-            padding: 20px 15px;
-            margin: 20px 0;
-            border: 2px solid #e1e5ff;
-        }
-
-        .game-section h3 {
-            font-size: 1.2em;
-            margin-bottom: 10px;
-            text-align: center;
-        }
-
-        .game-section p {
-            font-size: 0.9em;
-            text-align: center;
-            margin-bottom: 15px;
-        }
-
-        .memory-game {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 8px;
-            max-width: 320px;
-            margin: 20px auto;
-        }
-
-        .memory-card {
-            width: 70px;
-            height: 70px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5em;
-            color: white;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            user-select: none;
-            touch-action: manipulation;
-        }
-
-        .memory-card:hover,
-        .memory-card:active {
-            transform: scale(1.05);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-        }
-
-        .memory-card.flipped {
-            background: white;
-            border: 2px solid #667eea;
-            color: #667eea;
-        }
-
-        .memory-card.matched {
-            background: linear-gradient(135deg, #11998e, #38ef7d);
-            transform: scale(0.95);
-        }
-
-        #gameStatus {
-            font-size: 0.9em;
-            text-align: center;
-            margin-top: 15px;
-            min-height: 20px;
-        }
-
-        .wish-generator {
-            text-align: center;
-            margin: 20px 0;
-        }
-
-        .wish-generator h3 {
-            font-size: 1.2em;
-            margin-bottom: 10px;
-        }
-
-        .wish-generator p {
-            font-size: 0.9em;
-            margin-bottom: 15px;
-        }
-
-        .wish-btn {
-            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-            color: white;
-            border: none;
-            padding: 12px 25px;
-            border-radius: 50px;
-            font-size: 1em;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            margin: 10px;
-            touch-action: manipulation;
-        }
-
-        .wish-btn:hover,
-        .wish-btn:active {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
-        }
-
-        .wish-display {
-            background: linear-gradient(135deg, #ffeaa7, #fdcb6e);
-            padding: 15px;
-            border-radius: 15px;
-            margin: 15px 0;
-            font-style: italic;
-            font-size: 0.95em;
-            min-height: 50px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            transition: opacity 0.3s ease;
-        }
-
-        .confetti {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 1000;
-        }
-
-        .confetti-piece {
-            position: absolute;
-            width: 8px;
-            height: 8px;
-            background: #ff6b9d;
-            animation: confetti-fall 3s ease-out forwards;
-        }
-
-        @keyframes confetti-fall {
-            0% {
-                transform: translateY(-100vh) rotate(0deg);
-                opacity: 1;
-            }
-            100% {
-                transform: translateY(100vh) rotate(360deg);
-                opacity: 0;
-            }
+            padding: 30px 20px;
         }
 
         .message-section {
             background: linear-gradient(135deg, #e8f5e8, #f0fff0);
-            padding: 20px 15px;
+            padding: 30px;
             border-radius: 15px;
-            margin: 20px 0;
+            margin: 30px 0;
             text-align: center;
         }
 
         .message-section h2 {
+            font-size: 1.4em;
+            margin-bottom: 15px;
+        }
+
+        .chat-container {
+            background: #f8f9ff;
+            border-radius: 15px;
+            padding: 20px;
+            margin: 30px 0;
+            border: 2px solid #e1e5ff;
+            max-height: 500px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .chat-header {
+            text-align: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #e1e5ff;
+        }
+
+        .chat-header h3 {
             font-size: 1.3em;
-            margin-bottom: 10px;
+            color: #667eea;
+            margin-bottom: 8px;
         }
 
-        .message-section p {
+        .chat-header p {
             font-size: 0.95em;
+            color: #666;
         }
 
-        /* Media queries per dispositivi molto piccoli */
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            margin-bottom: 20px;
+            max-height: 300px;
+            min-height: 200px;
+        }
+
+        .message {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+
+        .message.user {
+            flex-direction: row-reverse;
+        }
+
+        .message.ai {
+            flex-direction: row;
+        }
+
+        .message-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2em;
+            flex-shrink: 0;
+        }
+
+        .message.user .message-avatar {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+
+        .message.ai .message-avatar {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .message-content {
+            max-width: 75%;
+            padding: 12px 16px;
+            border-radius: 18px;
+            font-size: 0.95em;
+            line-height: 1.4;
+        }
+
+        .message.user .message-content {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            border-bottom-right-radius: 6px;
+        }
+
+        .message.ai .message-content {
+            background: white;
+            color: #333;
+            border: 1px solid #e1e5ff;
+            border-bottom-left-radius: 6px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .chat-input-container {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .chat-input {
+            flex: 1;
+            padding: 12px 16px;
+            border: 2px solid #e1e5ff;
+            border-radius: 25px;
+            font-size: 16px;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .chat-input:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .send-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1.2em;
+        }
+
+        .send-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+        }
+
+        .send-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .typing-indicator {
+            display: none;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .typing-indicator.show {
+            display: flex;
+        }
+
+        .typing-dots {
+            display: flex;
+            gap: 4px;
+            background: white;
+            padding: 12px 16px;
+            border-radius: 18px;
+            border: 1px solid #e1e5ff;
+            border-bottom-left-radius: 6px;
+        }
+
+        .typing-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #667eea;
+            animation: typing 1.4s infinite;
+        }
+
+        .typing-dot:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .typing-dot:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes typing {
+            0%, 60%, 100% {
+                opacity: 0.3;
+                transform: scale(0.8);
+            }
+            30% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .suggestion-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+
+        .suggestion-btn {
+            background: rgba(102, 126, 234, 0.1);
+            color: #667eea;
+            border: 1px solid #667eea;
+            padding: 8px 14px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .suggestion-btn:hover {
+            background: #667eea;
+            color: white;
+        }
+
+        /* Media queries per dispositivi mobili */
         @media (max-width: 480px) {
             body {
                 padding: 5px;
@@ -254,89 +314,57 @@
             }
 
             .header {
-                padding: 25px 10px;
+                padding: 25px 15px;
             }
 
             h1 {
-                font-size: 1.6em;
+                font-size: 1.8em;
             }
 
             .subtitle {
-                font-size: 0.9em;
+                font-size: 1em;
             }
 
             .content {
-                padding: 15px 10px;
-            }
-
-            .game-section,
-            .message-section {
-                padding: 15px 10px;
-                margin: 15px 0;
-            }
-
-            .memory-game {
-                grid-template-columns: repeat(4, 1fr);
-                gap: 6px;
-                max-width: 280px;
-            }
-            
-            .memory-card {
-                width: 60px;
-                height: 60px;
-                font-size: 1.3em;
-                border-radius: 6px;
-            }
-
-            .wish-btn {
-                padding: 10px 20px;
-                font-size: 0.9em;
-            }
-
-            .wish-display {
-                padding: 12px;
-                font-size: 0.85em;
-                min-height: 40px;
-            }
-
-            .heart {
-                font-size: 14px;
-            }
-        }
-
-        /* Media queries per dispositivi molto larghi (landscape) */
-        @media (max-width: 640px) and (orientation: landscape) {
-            .header {
                 padding: 20px 15px;
             }
 
-            h1 {
-                font-size: 1.5em;
+            .chat-container {
+                padding: 15px;
+                margin: 20px 0;
             }
 
-            .memory-game {
-                max-width: 360px;
+            .message-content {
+                max-width: 85%;
+                font-size: 0.9em;
             }
 
-            .memory-card {
-                width: 80px;
-                height: 80px;
-                font-size: 1.6em;
+            .chat-input {
+                font-size: 16px;
+                padding: 10px 14px;
+            }
+
+            .send-btn {
+                width: 40px;
+                height: 40px;
+            }
+
+            .heart {
+                font-size: 16px;
+            }
+
+            .suggestion-buttons {
+                justify-content: center;
+            }
+
+            .suggestion-btn {
+                font-size: 0.8em;
+                padding: 6px 12px;
             }
         }
 
         /* Media queries per tablet */
         @media (min-width: 481px) and (max-width: 768px) {
-            .memory-game {
-                max-width: 400px;
-            }
-
-            .memory-card {
-                width: 85px;
-                height: 85px;
-                font-size: 1.8em;
-            }
-
             h1 {
                 font-size: 2.2em;
             }
@@ -344,36 +372,6 @@
             .subtitle {
                 font-size: 1.1em;
             }
-        }
-
-        /* Miglioramenti per touch */
-        @media (hover: none) and (pointer: coarse) {
-            .memory-card:hover {
-                transform: none;
-                box-shadow: none;
-            }
-
-            .wish-btn:hover {
-                transform: none;
-                box-shadow: none;
-            }
-
-            .memory-card:active,
-            .memory-card.touched {
-                transform: scale(0.95);
-                transition: transform 0.1s ease;
-                background: linear-gradient(135deg, #5a6fd8 0%, #6a4190 100%);
-            }
-
-            .wish-btn:active {
-                transform: scale(0.95);
-                transition: transform 0.1s ease;
-            }
-        }
-
-        /* Prevenire zoom accidentale */
-        input, button, textarea, select {
-            font-size: 16px;
         }
     </style>
 </head>
@@ -389,40 +387,58 @@
             <div class="content">
                 <div class="message-section">
                     <h2>🎉 Benvenuti nel vostro biglietto speciale! 🎉</h2>
-                    <p>Mi andava di fare qualcosa di goliardico e dunque...</p>
+                    <p>Mi andava di fare qualcosa di goliardico e dunque... ecco un'AI che genererà auguri personalizzati per voi!</p>
                 </div>
 
-                <div class="game-section">
-                    <h3>🎮 Memory dell'Amore</h3>
-                    <p>Trovate le coppie per scoprire i simboli del vostro matrimonio perfetto!</p>
-                    <div class="memory-game" id="memoryGame"></div>
-                    <p id="gameStatus">Clicca sulle carte per iniziare!</p>
-                </div>
+                <div class="chat-container">
+                    <div class="chat-header">
+                        <h3>🤖 AuguriBot</h3>
+                        <p>Chiedimi di creare auguri personalizzati per ogni occasione!</p>
+                    </div>
 
-                <div class="wish-generator">
-                    <h3>✨ Generatore di Auguri </h3>
-                    <p>Clicca per ricevere un augurio (da riutilizzare in altre occasioni)</p>
-                    <button class="wish-btn" onclick="generateWish()">Clicca qui! ✨</button>
-                    <div class="wish-display" id="wishDisplay">
-                        Clicca il pulsante per il primo augurio magico! 🌟
+                    <div class="suggestion-buttons" id="suggestionButtons">
+                        <button class="suggestion-btn" onclick="sendSuggestion('Scrivimi un augurio romantico')">💕 Romantico</button>
+                        <button class="suggestion-btn" onclick="sendSuggestion('Fammi ridere con un augurio divertente')">😄 Divertente</button>
+                        <button class="suggestion-btn" onclick="sendSuggestion('Un augurio per il futuro insieme')">🔮 Futuro</button>
+                        <button class="suggestion-btn" onclick="sendSuggestion('Augurio per la famiglia')">👨‍👩‍👧‍👦 Famiglia</button>
+                    </div>
+
+                    <div class="chat-messages" id="chatMessages">
+                        <div class="message ai">
+                            <div class="message-avatar">🤖</div>
+                            <div class="message-content">
+                                Ciao Pierpaolo e Letizia! 💕 Sono qui per creare auguri speciali per voi. Chiedetemi qualsiasi tipo di augurio e lo personalizzerò per la vostra occasione!
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="typing-indicator" id="typingIndicator">
+                        <div class="message-avatar">🤖</div>
+                        <div class="typing-dots">
+                            <div class="typing-dot"></div>
+                            <div class="typing-dot"></div>
+                            <div class="typing-dot"></div>
+                        </div>
+                    </div>
+
+                    <div class="chat-input-container">
+                        <input type="text" class="chat-input" id="chatInput" placeholder="Scrivimi che tipo di augurio vuoi..." onkeypress="handleKeyPress(event)">
+                        <button class="send-btn" id="sendBtn" onclick="sendMessage()">
+                            <span>➤</span>
+                        </button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="confetti" id="confetti"></div>
-
     <script>
-        // Animazione cuori nell'header
+        // Animazione cuori nell'header (invariata)
         function createHearts() {
             const heartsContainer = document.getElementById('hearts');
             const heartSymbols = ['💕', '💖', '💗', '💘', '💝'];
             
-            // Riduco il numero di cuori per mobile
-            const heartCount = window.innerWidth < 480 ? 10 : 15;
-            
-            for (let i = 0; i < heartCount; i++) {
+            for (let i = 0; i < 15; i++) {
                 const heart = document.createElement('div');
                 heart.className = 'heart';
                 heart.textContent = heartSymbols[Math.floor(Math.random() * heartSymbols.length)];
@@ -433,167 +449,140 @@
             }
         }
 
-        // Memory Game
-        const gameSymbols = ['💕', '💍', '🌹', '🥂', '💒', '👰', '🤵', '💐'];
-        let gameCards = [...gameSymbols, ...gameSymbols];
-        let flippedCards = [];
-        let matchedPairs = 0;
-        let isFlipping = false;
+        // Sistema di chat AI
+        const auguriBotResponses = {
+            romantico: [
+                "💕 Che il vostro amore sia come il vino pregiato: migliori con ogni anno che passa, diventando sempre più profondo e prezioso. Possiate amarvi oggi più di ieri, ma meno di domani!",
+                "🌹 Nei vostri occhi ho visto la magia dell'amore vero. Che ogni tramonto che guardate insieme sia più bello del precedente, e ogni alba porti nuove ragioni per amarvi ancora di più.",
+                "💝 Il vostro amore è la prova vivente che le anime gemelle esistono davvero. Che possiate danzare insieme attraverso tutte le stagioni della vita, sempre mano nella mano.",
+                "⭐ Come le stelle che brillano da millenni, che il vostro amore illumini il mondo intorno a voi e sia d'ispirazione per tutti coloro che vi conoscono."
+            ],
+            divertente: [
+                "😄 Congratulazioni per aver trovato qualcuno abbastanza coraggioso da sopportarvi per tutta la vita! Che possiate continuare a farvi ridere anche quando sarete vecchi e sdentati!",
+                "🤣 Il matrimonio è l'unica guerra dove si dorme con il nemico... ma almeno avete scelto un nemico carino! Auguri per questa bellissima battaglia dell'amore!",
+                "😂 Ora che siete sposati, ricordatevi: in caso di litigio, chi ha ragione deve preparare il caffè al mattino. Preparatevi a diventare esperti barista!",
+                "🎭 Hanno detto che il matrimonio è fatto di alti e bassi... ma almeno ora avete qualcuno con cui condividere le montagne russe! Che sia sempre più su che giù!"
+            ],
+            futuro: [
+                "🔮 Vedo nel vostro futuro: tanti viaggi incredibili, risate che riempiono la casa, bambini (o animali domestici) che combinano disastri, e un amore che cresce ogni giorno. Il futuro non è mai stato così luminoso!",
+                "🌟 Che il vostro domani sia pieno di avventure condivise, sogni realizzati insieme e la dolce routine dell'amore quotidiano. Il meglio deve ancora venire!",
+                "🚀 Siete pronti per l'avventura più bella della vita! Che il vostro futuro sia ricco di progetti realizzati insieme, traguardi celebrati a due e l'emozione di invecchiare fianco a fianco.",
+                "🌈 Ogni fine è un nuovo inizio. Oggi iniziate il capitolo più bello della vostra storia: che sia pieno di colpi di scena meravigliosi e finali sempre felici!"
+            ],
+            famiglia: [
+                "👨‍👩‍👧‍👦 Che la vostra casa diventi un porto sicuro dove l'amore cresce, le risate risuonano e ogni membro della famiglia trova il suo posto speciale. Famiglia è dove il cuore trova casa!",
+                "🏠 Possiate costruire non solo una casa, ma un nido d'amore dove crescere insieme, accogliere nuovi membri (a due o quattro zampe!) e creare ricordi che dureranno per generazioni.",
+                "👶 Che il vostro albero genealogico cresca rigoglioso, con rami pieni di risate, radici salde nell'amore e foglie che danzano al vento delle nuove avventure familiari!",
+                "💖 La famiglia che scegliete è quella che conta davvero. Che la vostra famiglia del cuore continui a crescere, abbracciando tutti coloro che amate e che vi amano!"
+            ],
+            generale: [
+                "✨ Ogni giorno insieme è un regalo prezioso. Che possiate scartarlo con la gioia di un bambino a Natale e conservare ogni momento nel cuore!",
+                "🎊 Il vostro matrimonio è l'inizio della più bella avventura. Che sia piena di sorprese meravigliose e scoperte continue l'uno dell'altro!",
+                "🌸 Come i fiori in primavera, che il vostro amore continui a sbocciare, portando bellezza e profumo in ogni angolo della vostra vita insieme.",
+                "🎵 Che la vostra vita insieme sia come una bellissima sinfonia: armoniosa, emozionante e che tocchi il cuore di tutti quelli che l'ascoltano!"
+            ]
+        };
 
-        function shuffleArray(array) {
-            for (let i = array.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [array[i], array[j]] = [array[j], array[i]];
-            }
+        function getRandomResponse(category) {
+            const responses = auguriBotResponses[category] || auguriBotResponses.generale;
+            return responses[Math.floor(Math.random() * responses.length)];
         }
 
-        function createMemoryGame() {
-            shuffleArray(gameCards);
-            const gameContainer = document.getElementById('memoryGame');
-            gameContainer.innerHTML = '';
+        function determineCategory(message) {
+            const lowerMessage = message.toLowerCase();
             
-            gameCards.forEach((symbol, index) => {
-                const card = document.createElement('div');
-                card.className = 'memory-card';
-                card.dataset.symbol = symbol;
-                card.dataset.index = index;
-                card.textContent = '❓';
-                card.addEventListener('click', flipCard);
-                // Prevenire doppio tap zoom su iOS
-                card.addEventListener('touchend', function(e) {
-                    e.preventDefault();
-                });
-                gameContainer.appendChild(card);
-            });
-        }
-
-        function flipCard(e) {
-            e.preventDefault();
-            const card = e.target;
-            
-            if (card.classList.contains('flipped') || 
-                card.classList.contains('matched') || 
-                flippedCards.length === 2 || 
-                isFlipping) {
-                return;
-            }
-
-            card.classList.add('flipped');
-            card.textContent = card.dataset.symbol;
-            flippedCards.push(card);
-
-            if (flippedCards.length === 2) {
-                isFlipping = true;
-                setTimeout(checkMatch, 1000);
-            }
-        }
-
-        function checkMatch() {
-            const [card1, card2] = flippedCards;
-            const status = document.getElementById('gameStatus');
-
-            if (card1.dataset.symbol === card2.dataset.symbol) {
-                card1.classList.add('matched');
-                card2.classList.add('matched');
-                matchedPairs++;
-                
-                if (matchedPairs === 8) {
-                    status.textContent = '🎉 Fantastico! Avete trovato tutti i simboli dell\'amore! 🎉';
-                    createConfetti();
-                } else {
-                    status.textContent = `Ottimo! ${matchedPairs}/8 coppie trovate! 💕`;
-                }
+            if (lowerMessage.includes('romantico') || lowerMessage.includes('amore') || lowerMessage.includes('cuore')) {
+                return 'romantico';
+            } else if (lowerMessage.includes('divertente') || lowerMessage.includes('ridere') || lowerMessage.includes('scherzoso')) {
+                return 'divertente';
+            } else if (lowerMessage.includes('futuro') || lowerMessage.includes('domani') || lowerMessage.includes('insieme')) {
+                return 'futuro';
+            } else if (lowerMessage.includes('famiglia') || lowerMessage.includes('bambini') || lowerMessage.includes('casa')) {
+                return 'famiglia';
             } else {
-                card1.classList.remove('flipped');
-                card2.classList.remove('flipped');
-                card1.textContent = '❓';
-                card2.textContent = '❓';
-                status.textContent = 'Riprova! L\'amore vince sempre! 💪';
+                return 'generale';
             }
-            
-            flippedCards = [];
-            isFlipping = false;
         }
 
-        // Generatore di auguri
-        const wishes = [
-            "Che il vostro amore sia eterno come le stelle nel cielo! ⭐",
-            "Possiate essere sempre l'uno il porto sicuro dell'altra! ⚓",
-            "Che ogni giorno insieme sia una nuova avventura! 🌄",
-            "Il vostro amore è la prova che i sogni diventano realtà! 🌈",
-            "Che possiate invecchiare insieme ridendo come oggi! 😄",
-            "Il vostro matrimonio è l'inizio della più bella storia d'amore! 📖",
-            "Che la vostra casa sia sempre piena di amore e risate! 🏠",
-            "Possiate superare insieme ogni tempesta e godere ogni arcobaleno! 🌩️🌈",
-            "Che il vostro amore cresca come un giardino in primavera! 🌸",
-            "Siate sempre l'uno la migliore avventura dell'altra! 🚀"
-        ];
-
-        function generateWish() {
-            const wishDisplay = document.getElementById('wishDisplay');
-            const randomWish = wishes[Math.floor(Math.random() * wishes.length)];
+        function addMessage(content, isUser = false) {
+            const chatMessages = document.getElementById('chatMessages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${isUser ? 'user' : 'ai'}`;
             
-            wishDisplay.style.opacity = '0';
+            messageDiv.innerHTML = `
+                <div class="message-avatar">${isUser ? '💕' : '🤖'}</div>
+                <div class="message-content">${content}</div>
+            `;
+            
+            chatMessages.appendChild(messageDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function showTyping() {
+            const typingIndicator = document.getElementById('typingIndicator');
+            typingIndicator.classList.add('show');
+            const chatMessages = document.getElementById('chatMessages');
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function hideTyping() {
+            const typingIndicator = document.getElementById('typingIndicator');
+            typingIndicator.classList.remove('show');
+        }
+
+        function sendMessage() {
+            const chatInput = document.getElementById('chatInput');
+            const sendBtn = document.getElementById('sendBtn');
+            const message = chatInput.value.trim();
+            
+            if (!message) return;
+            
+            // Aggiungi messaggio utente
+            addMessage(message, true);
+            chatInput.value = '';
+            
+            // Disabilita input durante la risposta
+            sendBtn.disabled = true;
+            chatInput.disabled = true;
+            
+            // Mostra indicatore di digitazione
+            showTyping();
+            
+            // Simula tempo di risposta dell'AI
             setTimeout(() => {
-                wishDisplay.textContent = randomWish;
-                wishDisplay.style.opacity = '1';
-            }, 300);
-        }
-
-        // Effetto confetti
-        function createConfetti() {
-            const confettiContainer = document.getElementById('confetti');
-            const colors = ['#ff6b9d', '#4ecdc4', '#45b7d1', '#f9ca24', '#eb4d4b', '#6c5ce7'];
-            
-            // Riduco il numero di confetti per mobile
-            const confettiCount = window.innerWidth < 480 ? 30 : 50;
-            
-            for (let i = 0; i < confettiCount; i++) {
-                const confetti = document.createElement('div');
-                confetti.className = 'confetti-piece';
-                confetti.style.left = Math.random() * 100 + '%';
-                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-                confetti.style.animationDelay = Math.random() * 2 + 's';
-                confettiContainer.appendChild(confetti);
+                hideTyping();
                 
-                setTimeout(() => {
-                    confetti.remove();
-                }, 3000);
-            }
+                const category = determineCategory(message);
+                const response = getRandomResponse(category);
+                addMessage(response);
+                
+                // Riabilita input
+                sendBtn.disabled = false;
+                chatInput.disabled = false;
+                chatInput.focus();
+            }, 1500 + Math.random() * 1000); // 1.5-2.5 secondi
         }
 
-        // Gestione orientamento
-        function handleOrientationChange() {
-            setTimeout(() => {
-                createHearts();
-            }, 500);
+        function sendSuggestion(suggestion) {
+            const chatInput = document.getElementById('chatInput');
+            chatInput.value = suggestion;
+            sendMessage();
+        }
+
+        function handleKeyPress(event) {
+            if (event.key === 'Enter') {
+                sendMessage();
+            }
         }
 
         // Inizializzazione
         document.addEventListener('DOMContentLoaded', function() {
             createHearts();
-            createMemoryGame();
             
-            // Gestisci cambio orientamento
-            window.addEventListener('orientationchange', handleOrientationChange);
-            window.addEventListener('resize', handleOrientationChange);
+            // Focus sull'input
+            const chatInput = document.getElementById('chatInput');
+            chatInput.focus();
         });
-
-        // Prevenire comportamenti indesiderati su mobile
-        document.addEventListener('touchstart', function(e) {
-            if (e.touches.length > 1) {
-                e.preventDefault();
-            }
-        }, { passive: false });
-
-        let lastTouchEnd = 0;
-        document.addEventListener('touchend', function(e) {
-            const now = (new Date()).getTime();
-            if (now - lastTouchEnd <= 300) {
-                e.preventDefault();
-            }
-            lastTouchEnd = now;
-        }, { passive: false });
     </script>
 </body>
 </html>
