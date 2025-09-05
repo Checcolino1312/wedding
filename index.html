@@ -358,9 +358,11 @@
                 box-shadow: none;
             }
 
-            .memory-card:active {
+            .memory-card:active,
+            .memory-card.touched {
                 transform: scale(0.95);
                 transition: transform 0.1s ease;
+                background: linear-gradient(135deg, #5a6fd8 0%, #6a4190 100%);
             }
 
             .wish-btn:active {
