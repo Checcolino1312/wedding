@@ -1,324 +1,539 @@
-import React, { useState, useEffect, useRef } from "react";
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>💖 ZIP Cuore</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-export default function ZipHeartGame() {
-  const gridSize = 7;
-  
-  // Forma del cuore e sequenza corretta
-  const heartSequence = [
-    { r: 1, c: 1, num: 1 }, { r: 1, c: 2, num: 2 }, { r: 1, c: 4, num: 3 }, { r: 1, c: 5, num: 4 },
-    { r: 2, c: 0, num: 5 }, { r: 2, c: 1, num: 6 }, { r: 2, c: 2, num: 7 }, { r: 2, c: 3, num: 8 }, 
-    { r: 2, c: 4, num: 9 }, { r: 2, c: 5, num: 10 }, { r: 2, c: 6, num: 11 },
-    { r: 3, c: 1, num: 12 }, { r: 3, c: 2, num: 13 }, { r: 3, c: 3, num: 14 }, { r: 3, c: 4, num: 15 }, { r: 3, c: 5, num: 16 },
-    { r: 4, c: 2, num: 17 }, { r: 4, c: 3, num: 18 }, { r: 4, c: 4, num: 19 },
-    { r: 5, c: 3, num: 20 }
-  ];
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #fce7f3, #fef2f2, #f3e8ff);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            user-select: none;
+        }
 
-  // Stati del gioco
-  const [gridNumbers, setGridNumbers] = useState([]);
-  const [draggedSequence, setDraggedSequence] = useState([]);
-  const [isDragging, setIsDragging] = useState(false);
-  const [gameWon, setGameWon] = useState(false);
-  const [dragPath, setDragPath] = useState([]);
-  const containerRef = useRef(null);
+        .container {
+            text-align: center;
+            max-width: 600px;
+        }
 
-  // Inizializza la griglia con numeri casuali
-  useEffect(() => {
-    const numbers = [];
-    const usedNumbers = new Set();
-    
-    // Prima assegna i numeri corretti alle posizioni del cuore
-    const correctNumbers = new Array(gridSize * gridSize).fill(0);
-    heartSequence.forEach(({ r, c, num }) => {
-      const index = r * gridSize + c;
-      correctNumbers[index] = num;
-      usedNumbers.add(num);
-    });
-    
-    // Poi riempi le altre caselle con numeri casuali
-    for (let i = 0; i < gridSize * gridSize; i++) {
-      if (correctNumbers[i] === 0) {
-        let randomNum;
-        do {
-          randomNum = Math.floor(Math.random() * 99) + 1;
-        } while (usedNumbers.has(randomNum));
+        h1 {
+            font-size: 3rem;
+            font-weight: bold;
+            background: linear-gradient(45deg, #dc2626, #ec4899);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: #6b7280;
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+        }
+
+        .game-status {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .status-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .next-number {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #dc2626;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 12px;
+            background: #e5e7eb;
+            border-radius: 6px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(45deg, #ef4444, #ec4899);
+            transition: width 0.3s ease;
+        }
+
+        .progress-text {
+            font-size: 0.8rem;
+            color: #6b7280;
+            margin-top: 5px;
+        }
+
+        .game-grid {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            border: 2px solid #fecaca;
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 8px;
+        }
+
+        .cell {
+            width: 56px;
+            height: 56px;
+            border: 2px solid #d1d5db;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            background: linear-gradient(135deg, #f9fafb, #f3f4f6);
+            color: #374151;
+            touch-action: none;
+        }
+
+        .cell.revealed {
+            background: linear-gradient(135deg, #f87171, #ec4899);
+            color: white;
+            border-color: #ef4444;
+            transform: scale(1.05);
+            box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+        }
+
+        .cell.next-target {
+            animation: pulse 2s infinite;
+            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.4);
+        }
+
+        .cell.dragging-over {
+            background: #dbeafe;
+            transform: scale(1.1);
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .message {
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+
+        .message.success {
+            background: #fef2f2;
+            border: 1px solid #fca5a5;
+            color: #dc2626;
+            animation: bounce 1s infinite;
+        }
+
+        .message.dragging {
+            background: #eff6ff;
+            border: 1px solid #93c5fd;
+            color: #2563eb;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-10px); }
+            60% { transform: translateY(-5px); }
+        }
+
+        .controls {
+            margin-bottom: 20px;
+        }
+
+        .btn {
+            background: #dc2626;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background 0.2s ease;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn:hover {
+            background: #b91c1c;
+        }
+
+        .btn:disabled {
+            background: #9ca3af;
+            cursor: not-allowed;
+        }
+
+        .instructions {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: left;
+            font-size: 0.9rem;
+            color: #374151;
+            line-height: 1.5;
+        }
+
+        .instructions h3 {
+            color: #dc2626;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .instructions ul {
+            margin-left: 20px;
+            margin-top: 10px;
+        }
+
+        .instructions li {
+            margin-bottom: 5px;
+            font-size: 0.8rem;
+        }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 2rem; }
+            .cell { width: 48px; height: 48px; font-size: 1rem; }
+            .game-grid { padding: 20px; }
+            .subtitle { font-size: 1rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>💖 ZIP Cuore</h1>
+        <p class="subtitle">Trascina senza alzare il dito attraverso i numeri in ordine (1→2→3...) per rivelare il cuore!</p>
         
-        correctNumbers[i] = randomNum;
-        usedNumbers.add(randomNum);
-      }
-    }
-    
-    setGridNumbers(correctNumbers);
-  }, []);
-
-  const getCellFromPoint = (x, y) => {
-    const container = containerRef.current;
-    if (!container) return null;
-    
-    const rect = container.getBoundingClientRect();
-    const cellSize = rect.width / gridSize;
-    
-    const relativeX = x - rect.left;
-    const relativeY = y - rect.top;
-    
-    const c = Math.floor(relativeX / cellSize);
-    const r = Math.floor(relativeY / cellSize);
-    
-    if (r >= 0 && r < gridSize && c >= 0 && c < gridSize) {
-      return { r, c };
-    }
-    return null;
-  };
-
-  const handleCellDrag = (r, c) => {
-    if (gameWon) return;
-    
-    const cellIndex = r * gridSize + c;
-    const number = gridNumbers[cellIndex];
-    const expectedNumber = draggedSequence.length + 1;
-    
-    // Controlla se è già nella sequenza
-    if (draggedSequence.some(cell => cell.r === r && cell.c === c)) return;
-    
-    // Trova se questa casella fa parte del cuore
-    const heartCell = heartSequence.find(cell => cell.r === r && cell.c === c);
-    
-    if (heartCell && number === expectedNumber) {
-      // Aggiunge alla sequenza trascinata
-      const newSequence = [...draggedSequence, { r, c, num: number }];
-      setDraggedSequence(newSequence);
-      
-      // Controlla se ha vinto
-      if (newSequence.length === heartSequence.length) {
-        setGameWon(true);
-        setIsDragging(false);
-      }
-    }
-  };
-
-  const handleMouseDown = (e, r, c) => {
-    e.preventDefault();
-    setIsDragging(true);
-    setDraggedSequence([]);
-    setDragPath([]);
-    handleCellDrag(r, c);
-  };
-
-  const handleMouseMove = (e) => {
-    if (!isDragging) return;
-    
-    const cell = getCellFromPoint(e.clientX, e.clientY);
-    if (cell) {
-      handleCellDrag(cell.r, cell.c);
-      
-      // Aggiunge alla linea di trascinamento
-      setDragPath(prev => {
-        const newPoint = { x: e.clientX, y: e.clientY };
-        return [...prev, newPoint];
-      });
-    }
-  };
-
-  const handleMouseUp = () => {
-    if (!isDragging) return;
-    
-    setIsDragging(false);
-    setDragPath([]);
-    
-    // Se non ha completato la sequenza, reset
-    if (draggedSequence.length !== heartSequence.length) {
-      setTimeout(() => {
-        setDraggedSequence([]);
-      }, 1000);
-    }
-  };
-
-  const handleTouchStart = (e, r, c) => {
-    e.preventDefault();
-    setIsDragging(true);
-    setDraggedSequence([]);
-    setDragPath([]);
-    handleCellDrag(r, c);
-  };
-
-  const handleTouchMove = (e) => {
-    if (!isDragging) return;
-    e.preventDefault();
-    
-    const touch = e.touches[0];
-    const cell = getCellFromPoint(touch.clientX, touch.clientY);
-    if (cell) {
-      handleCellDrag(cell.r, cell.c);
-    }
-  };
-
-  const handleTouchEnd = (e) => {
-    e.preventDefault();
-    handleMouseUp();
-  };
-
-  useEffect(() => {
-    if (isDragging) {
-      document.addEventListener('mousemove', handleMouseMove);
-      document.addEventListener('mouseup', handleMouseUp);
-      document.addEventListener('touchmove', handleTouchMove);
-      document.addEventListener('touchend', handleTouchEnd);
-    }
-    
-    return () => {
-      document.removeEventListener('mousemove', handleMouseMove);
-      document.removeEventListener('mouseup', handleMouseUp);
-      document.removeEventListener('touchmove', handleTouchMove);
-      document.removeEventListener('touchend', handleTouchEnd);
-    };
-  }, [isDragging, draggedSequence]);
-
-  const resetGame = () => {
-    setDraggedSequence([]);
-    setGameWon(false);
-    setIsDragging(false);
-    setDragPath([]);
-    
-    // Rigenera i numeri
-    const numbers = [];
-    const usedNumbers = new Set();
-    
-    const correctNumbers = new Array(gridSize * gridSize).fill(0);
-    heartSequence.forEach(({ r, c, num }) => {
-      const index = r * gridSize + c;
-      correctNumbers[index] = num;
-      usedNumbers.add(num);
-    });
-    
-    for (let i = 0; i < gridSize * gridSize; i++) {
-      if (correctNumbers[i] === 0) {
-        let randomNum;
-        do {
-          randomNum = Math.floor(Math.random() * 99) + 1;
-        } while (usedNumbers.has(randomNum));
-        
-        correctNumbers[i] = randomNum;
-        usedNumbers.add(randomNum);
-      }
-    }
-    
-    setGridNumbers(correctNumbers);
-  };
-
-  const progress = (draggedSequence.length / heartSequence.length) * 100;
-
-  return (
-    <div className="min-h-screen bg-gradient-to-br from-pink-100 via-red-50 to-purple-100 flex flex-col items-center justify-center p-6 select-none">
-      
-      <div className="text-center mb-6">
-        <h1 className="text-4xl font-bold bg-gradient-to-r from-red-600 to-pink-600 bg-clip-text text-transparent mb-2">
-          💖 ZIP Cuore
-        </h1>
-        <p className="text-gray-600 mb-4">
-          Trascina senza alzare il dito attraverso i numeri in ordine (1→2→3...) per rivelare il cuore!
-        </p>
-        
-        {/* Stato del gioco */}
-        <div className="bg-white rounded-lg p-4 shadow-md mb-4 max-w-md mx-auto">
-          <div className="flex justify-between items-center mb-2">
-            <span className="text-sm font-medium text-gray-700">
-              {isDragging ? "Trascinando..." : gameWon ? "Completato!" : "Prossimo numero:"}
-            </span>
-            <span className="text-xl font-bold text-red-600">
-              {gameWon ? "✅" : draggedSequence.length + 1}
-            </span>
-          </div>
-          <div className="w-full bg-gray-200 rounded-full h-3">
-            <div 
-              className="bg-gradient-to-r from-red-500 to-pink-500 h-3 rounded-full transition-all duration-300"
-              style={{ width: `${progress}%` }}
-            />
-          </div>
-          <div className="text-xs text-gray-500 mt-1">
-            {draggedSequence.length}/{heartSequence.length} caselle del cuore
-          </div>
+        <div class="game-status">
+            <div class="status-row">
+                <span id="status-text">Prossimo numero:</span>
+                <span class="next-number" id="next-number">1</span>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress-fill" style="width: 0%"></div>
+            </div>
+            <div class="progress-text" id="progress-text">0/20 caselle del cuore</div>
         </div>
 
-        {gameWon && (
-          <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg mb-4 animate-pulse">
+        <div id="success-message" class="message success" style="display: none;">
             🎉 Fantastico! Hai rivelato tutto il cuore trascinando! 💖
-          </div>
-        )}
-
-        {isDragging && (
-          <div className="bg-blue-100 border border-blue-400 text-blue-700 px-4 py-3 rounded-lg mb-4">
-            🔵 Continua a trascinare... Cerca il numero {draggedSequence.length + 1}
-          </div>
-        )}
-      </div>
-
-      {/* Griglia di gioco */}
-      <div className="bg-white rounded-2xl p-6 shadow-xl border-2 border-red-100 mb-6 relative">
-        <div 
-          ref={containerRef}
-          className="grid gap-2 relative" 
-          style={{ gridTemplateColumns: `repeat(${gridSize}, 1fr)` }}
-        >
-          {gridNumbers.map((number, index) => {
-            const r = Math.floor(index / gridSize);
-            const c = index % gridSize;
-            
-            // Controlla se questa casella è stata trascinata correttamente
-            const isRevealed = draggedSequence.some(cell => cell.r === r && cell.c === c);
-            const isHeartCell = heartSequence.some(cell => cell.r === r && cell.c === c);
-            const isNextTarget = !gameWon && isHeartCell && number === draggedSequence.length + 1;
-            const isDraggedOver = isDragging && isNextTarget;
-
-            return (
-              <div
-                key={index}
-                onMouseDown={(e) => handleMouseDown(e, r, c)}
-                onTouchStart={(e) => handleTouchStart(e, r, c)}
-                className={`
-                  w-14 h-14 border-2 rounded-xl cursor-pointer transition-all duration-200
-                  flex items-center justify-center text-lg font-bold
-                  ${isRevealed 
-                    ? 'bg-gradient-to-br from-red-400 to-pink-500 text-white border-red-500 shadow-lg transform scale-105' 
-                    : 'bg-gradient-to-br from-gray-50 to-gray-100 text-gray-700 border-gray-300'
-                  }
-                  ${isNextTarget ? 'ring-4 ring-blue-400 ring-opacity-75 animate-pulse' : ''}
-                  ${isDraggedOver ? 'bg-blue-200 scale-110' : ''}
-                `}
-                style={{ touchAction: 'none' }}
-              >
-                {isRevealed ? '💖' : number}
-              </div>
-            );
-          })}
         </div>
-      </div>
 
-      {/* Controlli */}
-      <div className="flex gap-4 mb-6">
-        <button
-          onClick={resetGame}
-          className="px-6 py-3 bg-red-600 text-white rounded-lg hover:bg-red-700 transition shadow-md"
-          disabled={isDragging}
-        >
-          🔄 Nuova Partita
-        </button>
-      </div>
-
-      {/* Istruzioni */}
-      <div className="bg-white rounded-lg p-4 shadow-md max-w-2xl text-sm text-gray-700">
-        <h3 className="font-bold text-red-600 mb-2">📋 Come giocare (stile ZIP):</h3>
-        <div className="space-y-2">
-          <p><strong>Obiettivo:</strong> Trascina il dito/mouse attraverso i numeri in ordine crescente SENZA MAI ALZARLO!</p>
-          <p><strong>Regole:</strong></p>
-          <ul className="list-disc list-inside text-xs space-y-1 ml-4">
-            <li>Inizia dal numero 1 e trascina verso 2, poi 3, 4, 5...</li>
-            <li><strong>NON alzare mai il dito/mouse</strong> durante il trascinamento</li>
-            <li>I numeri giusti formano un cuore nascosto</li>
-            <li>Se alzi il dito prima di finire, devi ricominciare</li>
-            <li>Le caselle corrette si trasformano in cuoricini 💖</li>
-            <li>Vinci quando completi l'intera sequenza da 1 a 20!</li>
-          </ul>
+        <div id="dragging-message" class="message dragging" style="display: none;">
+            🔵 Continua a trascinare... Cerca il numero <span id="drag-next">1</span>
         </div>
-      </div>
+
+        <div class="game-grid">
+            <div class="grid" id="game-grid"></div>
+        </div>
+
+        <div class="controls">
+            <button class="btn" onclick="resetGame()" id="reset-btn">🔄 Nuova Partita</button>
+        </div>
+
+        <div class="instructions">
+            <h3>📋 Come giocare (stile ZIP):</h3>
+            <p><strong>Obiettivo:</strong> Trascina il dito/mouse attraverso i numeri in ordine crescente SENZA MAI ALZARLO!</p>
+            <p><strong>Regole:</strong></p>
+            <ul>
+                <li>Inizia dal numero 1 e trascina verso 2, poi 3, 4, 5...</li>
+                <li><strong>NON alzare mai il dito/mouse</strong> durante il trascinamento</li>
+                <li>I numeri giusti formano un cuore nascosto</li>
+                <li>Se alzi il dito prima di finire, devi ricominciare</li>
+                <li>Le caselle corrette si trasformano in cuoricini 💖</li>
+                <li>Vinci quando completi l'intera sequenza da 1 a 20!</li>
+            </ul>
+        </div>
     </div>
-  );
-}
+
+    <script>
+        const gridSize = 7;
+        
+        // Forma del cuore e sequenza corretta
+        const heartSequence = [
+            { r: 1, c: 1, num: 1 }, { r: 1, c: 2, num: 2 }, { r: 1, c: 4, num: 3 }, { r: 1, c: 5, num: 4 },
+            { r: 2, c: 0, num: 5 }, { r: 2, c: 1, num: 6 }, { r: 2, c: 2, num: 7 }, { r: 2, c: 3, num: 8 }, 
+            { r: 2, c: 4, num: 9 }, { r: 2, c: 5, num: 10 }, { r: 2, c: 6, num: 11 },
+            { r: 3, c: 1, num: 12 }, { r: 3, c: 2, num: 13 }, { r: 3, c: 3, num: 14 }, { r: 3, c: 4, num: 15 }, { r: 3, c: 5, num: 16 },
+            { r: 4, c: 2, num: 17 }, { r: 4, c: 3, num: 18 }, { r: 4, c: 4, num: 19 },
+            { r: 5, c: 3, num: 20 }
+        ];
+
+        let gridNumbers = [];
+        let draggedSequence = [];
+        let isDragging = false;
+        let gameWon = false;
+
+        function initializeGrid() {
+            const usedNumbers = new Set();
+            const correctNumbers = new Array(gridSize * gridSize).fill(0);
+            
+            // Assegna i numeri corretti alle posizioni del cuore
+            heartSequence.forEach(({ r, c, num }) => {
+                const index = r * gridSize + c;
+                correctNumbers[index] = num;
+                usedNumbers.add(num);
+            });
+            
+            // Riempi le altre caselle con numeri casuali
+            for (let i = 0; i < gridSize * gridSize; i++) {
+                if (correctNumbers[i] === 0) {
+                    let randomNum;
+                    do {
+                        randomNum = Math.floor(Math.random() * 99) + 1;
+                    } while (usedNumbers.has(randomNum));
+                    
+                    correctNumbers[i] = randomNum;
+                    usedNumbers.add(randomNum);
+                }
+            }
+            
+            gridNumbers = correctNumbers;
+            renderGrid();
+        }
+
+        function renderGrid() {
+            const grid = document.getElementById('game-grid');
+            grid.innerHTML = '';
+            
+            for (let i = 0; i < gridSize * gridSize; i++) {
+                const r = Math.floor(i / gridSize);
+                const c = i % gridSize;
+                const number = gridNumbers[i];
+                
+                const cell = document.createElement('div');
+                cell.className = 'cell';
+                cell.dataset.row = r;
+                cell.dataset.col = c;
+                cell.dataset.number = number;
+                
+                const isRevealed = draggedSequence.some(cell => cell.r === r && cell.c === c);
+                const isHeartCell = heartSequence.some(cell => cell.r === r && cell.c === c);
+                const isNextTarget = !gameWon && isHeartCell && number === draggedSequence.length + 1;
+                
+                if (isRevealed) {
+                    cell.classList.add('revealed');
+                    cell.textContent = '💖';
+                } else {
+                    cell.textContent = number;
+                    if (isNextTarget) {
+                        cell.classList.add('next-target');
+                    }
+                }
+                
+                // Event listeners
+                cell.addEventListener('mousedown', handleMouseDown);
+                cell.addEventListener('touchstart', handleTouchStart, { passive: false });
+                
+                grid.appendChild(cell);
+            }
+        }
+
+        function getCellFromElement(element) {
+            if (!element.classList.contains('cell')) return null;
+            return {
+                r: parseInt(element.dataset.row),
+                c: parseInt(element.dataset.col),
+                number: parseInt(element.dataset.number)
+            };
+        }
+
+        function getCellFromPoint(x, y) {
+            const element = document.elementFromPoint(x, y);
+            return getCellFromElement(element);
+        }
+
+        function handleCellDrag(r, c, number) {
+            if (gameWon) return;
+            
+            const expectedNumber = draggedSequence.length + 1;
+            
+            // Controlla se è già nella sequenza
+            if (draggedSequence.some(cell => cell.r === r && cell.c === c)) return;
+            
+            // Trova se questa casella fa parte del cuore
+            const heartCell = heartSequence.find(cell => cell.r === r && cell.c === c);
+            
+            if (heartCell && number === expectedNumber) {
+                // Aggiunge alla sequenza trascinata
+                draggedSequence.push({ r, c, num: number });
+                updateUI();
+                
+                // Controlla se ha vinto
+                if (draggedSequence.length === heartSequence.length) {
+                    gameWon = true;
+                    isDragging = false;
+                    showSuccess();
+                }
+                
+                renderGrid();
+            }
+        }
+
+        function handleMouseDown(e) {
+            e.preventDefault();
+            const cell = getCellFromElement(e.target);
+            if (!cell) return;
+            
+            startDragging();
+            handleCellDrag(cell.r, cell.c, cell.number);
+        }
+
+        function handleMouseMove(e) {
+            if (!isDragging) return;
+            
+            const cell = getCellFromPoint(e.clientX, e.clientY);
+            if (cell) {
+                handleCellDrag(cell.r, cell.c, cell.number);
+            }
+        }
+
+        function handleMouseUp() {
+            if (!isDragging) return;
+            stopDragging();
+        }
+
+        function handleTouchStart(e) {
+            e.preventDefault();
+            const cell = getCellFromElement(e.target);
+            if (!cell) return;
+            
+            startDragging();
+            handleCellDrag(cell.r, cell.c, cell.number);
+        }
+
+        function handleTouchMove(e) {
+            if (!isDragging) return;
+            e.preventDefault();
+            
+            const touch = e.touches[0];
+            const cell = getCellFromPoint(touch.clientX, touch.clientY);
+            if (cell) {
+                handleCellDrag(cell.r, cell.c, cell.number);
+            }
+        }
+
+        function handleTouchEnd(e) {
+            e.preventDefault();
+            stopDragging();
+        }
+
+        function startDragging() {
+            isDragging = true;
+            draggedSequence = [];
+            
+            document.addEventListener('mousemove', handleMouseMove);
+            document.addEventListener('mouseup', handleMouseUp);
+            document.addEventListener('touchmove', handleTouchMove, { passive: false });
+            document.addEventListener('touchend', handleTouchEnd, { passive: false });
+            
+            showDraggingMessage();
+        }
+
+        function stopDragging() {
+            isDragging = false;
+            
+            document.removeEventListener('mousemove', handleMouseMove);
+            document.removeEventListener('mouseup', handleMouseUp);
+            document.removeEventListener('touchmove', handleTouchMove);
+            document.removeEventListener('touchend', handleTouchEnd);
+            
+            hideDraggingMessage();
+            
+            // Se non ha completato la sequenza, reset dopo un secondo
+            if (draggedSequence.length !== heartSequence.length && !gameWon) {
+                setTimeout(() => {
+                    if (!gameWon) {
+                        draggedSequence = [];
+                        updateUI();
+                        renderGrid();
+                    }
+                }, 1000);
+            }
+        }
+
+        function updateUI() {
+            const progress = (draggedSequence.length / heartSequence.length) * 100;
+            
+            document.getElementById('progress-fill').style.width = progress + '%';
+            document.getElementById('progress-text').textContent = 
+                `${draggedSequence.length}/${heartSequence.length} caselle del cuore`;
+            
+            if (gameWon) {
+                document.getElementById('status-text').textContent = 'Completato!';
+                document.getElementById('next-number').textContent = '✅';
+            } else if (isDragging) {
+                document.getElementById('status-text').textContent = 'Trascinando...';
+                document.getElementById('next-number').textContent = draggedSequence.length + 1;
+                document.getElementById('drag-next').textContent = draggedSequence.length + 1;
+            } else {
+                document.getElementById('status-text').textContent = 'Prossimo numero:';
+                document.getElementById('next-number').textContent = draggedSequence.length + 1;
+            }
+        }
+
+        function showSuccess() {
+            document.getElementById('success-message').style.display = 'block';
+        }
+
+        function showDraggingMessage() {
+            document.getElementById('dragging-message').style.display = 'block';
+        }
+
+        function hideDraggingMessage() {
+            document.getElementById('dragging-message').style.display = 'none';
+        }
+
+        function resetGame() {
+            draggedSequence = [];
+            gameWon = false;
+            isDragging = false;
+            
+            document.getElementById('success-message').style.display = 'none';
+            document.getElementById('dragging-message').style.display = 'none';
+            
+            initializeGrid();
+            updateUI();
+        }
+
+        // Inizializza il gioco al caricamento della pagina
+        window.addEventListener('load', () => {
+            initializeGrid();
+            updateUI();
+        });
+
+        // Previene il comportamento di default del browser per il drag
+        document.addEventListener('dragstart', (e) => e.preventDefault());
+        document.addEventListener('selectstart', (e) => e.preventDefault());
+    </script>
+</body>
+</html>
